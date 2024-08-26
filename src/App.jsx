@@ -10,6 +10,7 @@ import CityList from "./components/CityList";
 import { useEffect, useState } from "react";
 import CountryList from "./components/CountryList";
 import City from "./components/City";
+import Form from "./components/Form";
 
 const BASE_URL = "http://localhost:9000";
 
@@ -25,7 +26,7 @@ function App() {
         const data = await res.json();
         setCities(data);
       } catch {
-        alert("Threre was an error loading data...");
+        alert("There was an error loading data...");
       } finally {
         setIsLoading(false);
       }
@@ -57,7 +58,7 @@ function App() {
               path="countries"
               element={<CountryList cities={cities} isLoading={isLoading} />}
             />
-            <Route path="form" element={<p>Form</p>} />
+            <Route path="form" element={<Form />} />
           </Route>
           <Route path="*" element={<PageNotFound />} />
         </Routes>
