@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 
 import Pricing from "./pages/Pricing";
 import Product from "./pages/Product";
@@ -45,10 +45,7 @@ function App() {
             <Route path="app" element={<AppLayout />} />
           </Route>
           <Route path="app" element={<AppLayout />}>
-            <Route
-              index
-              element={<CityList cities={cities} isLoading={isLoading} />}
-            />
+            <Route index element={<Navigate replace to="cities" />} />
             <Route
               path="cities"
               element={<CityList cities={cities} isLoading={isLoading} />}
