@@ -4,7 +4,10 @@ import Spinner from "./Spinner";
 import styles from "./CityList.module.css";
 import CityItem from "./CityItem";
 import Message from "./Message";
-function CityList({ cities, isLoading }) {
+import { useContext } from "react";
+import { CitiesProvider, useCities } from "../contexts/CitiesContext";
+function CityList() {
+  const { cities, isLoading } = useCities();
   if (isLoading) return <Spinner />;
 
   if (!cities.length)
@@ -14,8 +17,8 @@ function CityList({ cities, isLoading }) {
 
   return (
     <ul className={styles.cityList}>
-      {cities.map((city) => (
-        <CityItem city={city} key={city.id} />
+      {cities.map((city, i) => (
+        <CityItem city={city} key={i} />
       ))}
     </ul>
   );

@@ -4,7 +4,10 @@ import Spinner from "./Spinner";
 import styles from "./CountryList.module.css";
 import CountryItem from "./CountryItem";
 import Message from "./Message";
-function CountryList({ cities, isLoading }) {
+import { CitiesProvider, useCities } from "../contexts/CitiesContext";
+import { useContext } from "react";
+function CountryList() {
+  const { cities, isLoading } = useCities();
   if (isLoading) return <Spinner />;
 
   if (!cities.length)
