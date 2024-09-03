@@ -1,18 +1,12 @@
 /* eslint-disable react/prop-types */
+import { useFlagEmoji } from "../hooks/useFlagEmoji";
 import styles from "./CountryItem.module.css";
 
 function CountryItem({ country }) {
-  const flagemojiToPNG = (flag) => {
-    var countryCode = Array.from(flag, (codeUnit) => codeUnit.codePointAt())
-      .map((char) => String.fromCharCode(char - 127397).toLowerCase())
-      .join("");
-    return (
-      <img src={`https://flagcdn.com/24x18/${countryCode}.png`} alt="flag" />
-    );
-  };
+  const flagemojiToPNG = useFlagEmoji();
   return (
     <li className={styles.countryItem}>
-      <span>{flagemojiToPNG(country.emoji)}</span>
+      <img src={flagemojiToPNG(country.emoji)} alt="flag" />
       <span>{country.country}</span>
     </li>
   );

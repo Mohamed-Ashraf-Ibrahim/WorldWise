@@ -14,6 +14,7 @@ import { useEffect, useState } from "react";
 import { useCities } from "../contexts/CitiesContext";
 import useGeolocation from "../hooks/useGeolocation";
 import Button from "./Button";
+import { useUrlPosition } from "../hooks/useUrlPosition";
 
 const flagemojiToPNG = (flag) => {
   if (!flag || typeof flag !== "string") {
@@ -31,10 +32,6 @@ const flagemojiToPNG = (flag) => {
 };
 
 function Map() {
-  const [searchParams] = useSearchParams();
-  const mapLat = parseFloat(searchParams.get("lat"));
-  const mapLng = parseFloat(searchParams.get("lng"));
-
   const { cities } = useCities();
   const {
     isloading: isLoadingPosition,
@@ -42,6 +39,7 @@ function Map() {
     getPosition,
   } = useGeolocation();
   const [mapPosition, setMapPosition] = useState([40, 0]);
+  const [mapLat, mapLng] = useUrlPosition();
 
   useEffect(() => {
     if (mapLat && mapLng) {

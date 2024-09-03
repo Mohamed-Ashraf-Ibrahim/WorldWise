@@ -5,6 +5,7 @@ import { useCities } from "../contexts/CitiesContext";
 import { useEffect } from "react";
 import Spinner from "./Spinner";
 import BackButton from "./BackButton";
+import { useFlagEmoji } from "../hooks/useFlagEmoji";
 
 const formatDate = (date) =>
   new Intl.DateTimeFormat("en", {
@@ -18,6 +19,7 @@ function City() {
   const { id } = useParams();
   // const [searchParams, setSearchParams] = useSearchParams();
   const { currentCity, getCity, isLoading } = useCities(id);
+  const flagemojiToPNG = useFlagEmoji();
 
   // fetch the city data after component unmount
   useEffect(() => {
@@ -26,23 +28,23 @@ function City() {
 
   if (isLoading) return <Spinner />;
 
-  // function to show the flag emoji
-  const flagemojiToPNG = (flag) => {
-    if (!flag || typeof flag !== "string") {
-      console.error("Invalid flag input:", flag);
-      return null; // or you can return a placeholder image if desired
-    }
+  // // function to show the flag emoji
+  // const flagemojiToPNG = (flag) => {
+  //   if (!flag || typeof flag !== "string") {
+  //     console.error("Invalid flag input:", flag);
+  //     return null; // or you can return a placeholder image if desired
+  //   }
 
-    const countryCode = Array.from(flag, (codeUnit) => codeUnit.codePointAt())
-      .map((char) => String.fromCharCode(char - 127397).toLowerCase())
-      .join("");
-    return (
-      <img
-        src={`https://flagcdn.com/24x18/${countryCode}.png`}
-        alt={`${countryCode} flag`}
-      />
-    );
-  };
+  //   const countryCode = Array.from(flag, (codeUnit) => codeUnit.codePointAt())
+  //     .map((char) => String.fromCharCode(char - 127397).toLowerCase())
+  //     .join("");
+  //   return (
+  //     <img
+  //       src={`https://flagcdn.com/24x18/${countryCode}.png`}
+  //       alt={`${countryCode} flag`}
+  //     />
+  //   );
+  // };
 
   // const lat = searchParams.get("lat");
   // const lng = searchParams.get("lng");
@@ -53,7 +55,7 @@ function City() {
       <div className={styles.row}>
         <h6>City name</h6>
         <h3>
-          <span>{flagemojiToPNG(emoji)}</span> {cityName}
+          <img src={flagemojiToPNG(emoji)} alt="flag" /> {cityName}
         </h3>
       </div>
 
@@ -81,7 +83,7 @@ function City() {
       </div>
 
       <div>
-        <BackButton/>
+        <BackButton />
       </div>
     </div>
   );
