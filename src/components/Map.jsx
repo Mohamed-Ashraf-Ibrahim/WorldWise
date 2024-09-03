@@ -12,6 +12,8 @@ import {
 } from "react-leaflet";
 import { useEffect, useState } from "react";
 import { useCities } from "../contexts/CitiesContext";
+import useGeolocation from "../hooks/useGeolocation";
+import Button from "./Button";
 
 const flagemojiToPNG = (flag) => {
   if (!flag || typeof flag !== "string") {
@@ -34,6 +36,11 @@ function Map() {
   const mapLng = parseFloat(searchParams.get("lng"));
 
   const { cities } = useCities();
+  const {
+    isloading: isLoadingPosition,
+    position: geolocationPosition,
+    getPosition,
+  } = useGeolocation();
   const [mapPosition, setMapPosition] = useState([40, 0]);
 
   useEffect(() => {
@@ -42,8 +49,18 @@ function Map() {
     }
   }, [mapLat, mapLng]);
 
+  useEffect(() => {
+    if (geolocationPosition)
+      return setMapPosition([geolocationPosition.lat, geolocationPosition.lng]);
+  }, [geolocationPosition]);
+
   return (
     <div className={styles.mapContainer}>
+      {!geolocationPosition && (
+        <Button type="position" onClick={getPosition}>
+          {isLoadingPosition ? "Loading" : "Use Your Position..."}
+        </Button>
+      )}
       <MapContainer
         center={mapPosition}
         zoom={6}
