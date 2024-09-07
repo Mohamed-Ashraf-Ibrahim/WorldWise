@@ -64,10 +64,6 @@ function reducer(state, action) {
 }
 
 function CitiesProvider({ children }) {
-  // const [cities, setCities] = useState([]);
-  // const [isLoading, setIsLoading] = useState(false);
-  // const [currentCity, setCurrentCity] = useState({});
-
   const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
